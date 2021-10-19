@@ -1,35 +1,14 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
 metadata:
   name: basic-html
 spec:
   selector:
-    matchLabels:
-      app: basic-html
-  replicas: 1 
-  template: 
-    metadata:
-      labels:
-        app: basic-html
-    spec:
-      containers:
-      - name: basic-html
-        image: f5vittogiron/basic-html
-        ports:
-        - containerPort: 80
----
-apiVersion: v1
-kind: Service
-metadata:
- name: basic-html
-spec:
- type: NodePort
- selector:
-   app: basic-html
- ports:
-   - name: client
-     protocol: TCP
-     port: 80
-     nodePort: 32555
- selector:
-   app: basic-html
+    app: basic-html
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
+  externalIPs:
+    - 172.16.0.101
